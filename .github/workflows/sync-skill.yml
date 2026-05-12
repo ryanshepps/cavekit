@@ -1,0 +1,46 @@
+name: Sync SKILL.md copies
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - FORMAT.md
+      - skills/**/SKILL.md
+
+concurrency:
+  group: sync-skill
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Pull latest before making changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+
+      - name: Sync FORMAT.md copy
+        run: cp FORMAT.md plugins/ck/FORMAT.md
+
+      - name: Sync SKILL.md copies
+        run: |
+          cp skills/backprop/SKILL.md plugins/ck/skills/backprop/SKILL.md
+          cp skills/build/SKILL.md plugins/ck/skills/build/SKILL.md
+          cp skills/caveman/SKILL.md plugins/ck/skills/caveman/SKILL.md
+          cp skills/check/SKILL.md plugins/ck/skills/check/SKILL.md
+          cp skills/spec/SKILL.md plugins/ck/skills/spec/SKILL.md
+
+      - name: Commit and push if changed
+        run: |
+          git add plugins/ck/FORMAT.md plugins/ck/skills
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: sync SKILL.md copies [skip ci]"
+          git push

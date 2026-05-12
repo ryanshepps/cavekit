@@ -1,7 +1,7 @@
 <h1 align="center">cavekit</h1>
 
 <p align="center">
-  <strong>compressed spec-driven development for claude code</strong><br/>
+  <strong>compressed spec-driven development for claude code and codex</strong><br/>
   <sub>one file · three commands · zero sub-agents</sub>
 </p>
 
@@ -34,6 +34,8 @@ That's the whole pitch.
 
 ## install
 
+### Claude Code
+
 One line, via the `skills` CLI:
 
 ```bash
@@ -60,6 +62,14 @@ Or clone directly:
 git clone https://github.com/juliusbrussee/cavekit.git ~/.claude/plugins/cavekit
 ```
 
+### Codex
+
+```bash
+codex plugin marketplace add JuliusBrussee/cavekit
+```
+
+Then enable `ck@cavekit` from the Cavekit marketplace in Codex.
+
 ## format
 
 See [`FORMAT.md`](./FORMAT.md). Fixed sections: §G goal, §C constraints,
@@ -75,6 +85,9 @@ skills/build          plan-execute skill (mirrors commands/build.md)
 skills/check          drift report skill (mirrors commands/check.md)
 skills/caveman        encoding utility
 skills/backprop       bug → spec protocol (six steps)
+plugins/ck            Codex plugin package (synced from root sources)
+.agents/plugins       Codex marketplace metadata
+tests/                local repo verification
 ```
 
 ## non-goals
